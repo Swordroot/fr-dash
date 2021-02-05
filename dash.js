@@ -19,19 +19,23 @@ const slack_token = process.env.slack_token;
 const clocks = {
   in: {
     type: 'clock_in',
-    text: "リモート開始します"
+    text: "出勤",
+    typo: "出勤"
   },
   begin: {
     type: 'break_begin',
-    text: '休憩します'
+    text: 'QK',
+    typo: 'QK'
   },
   end: {
     type: 'break_end',
-    text: '再開します'
+    text: 'もどり',
+    typo: 'modori'
   },
   out: {
     type: 'clock_out',
-    text: 'リモート終了します'
+    text: '退勤',
+    type: 'ちきん'
   },
 };
 const program = new Command();
@@ -74,7 +78,7 @@ async function punch(status) {
     throw new Error(`not abailable: ${abailable.available_types}`);
   }
   await changeStatus(tokens.freee_token, userId, companyId, clocks[status].type);
-  await sendMessage(clocks[status].text);
+  await sendMessage(Math.random() < 0.93 ? clocks[status].text : clocks[status].typo);
 };
 
 async function udpateToken() {
