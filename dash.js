@@ -14,6 +14,7 @@ const webhook_url = process.env.webhook_url;
 const username = process.env.username;
 const icon_url = process.env.icon_url;
 const channel = process.env.channel;
+const slack_token = process.env.slack_token;
 
 const clocks = {
   in: {
@@ -101,7 +102,8 @@ async function udpateToken() {
     channel,
     webhook_url,
     username,
-    icon_url
+    icon_url,
+    slack_token
   };
 
   await fs.writeFile('.env',
@@ -152,18 +154,18 @@ async function sendMessage(text) {
     text,
     channel,
     username,
-    icon_url
+    slack_token
   }))
   const options = {
     method: 'POST',
     headers: {
-      "Content-Type": "application/json; charset=UTF-8"
+      "Content-Type": "application/json; charset=UTF-8",
+      "Authorization": ` Bearer ${slack_token}`
     },
     body: JSON.stringify({
       text,
       channel,
-      username,
-      icon_url
+      as_user: username
     })
   };
   // NOTE: ここは「ok」しか返ってこない
