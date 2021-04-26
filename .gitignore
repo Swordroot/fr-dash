@@ -117,4 +117,7 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
+*.xlsx
+punchMonthlyLogs.csv
+
 
